@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusIQ — Academic Risk & Placement Readiness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-name">CampusIQ</span>
+    </div>
+    <p class="brand-tag">Early-warning risk &amp; placement readiness for final-year students</p>
+  </header>
+
+  <main class="grid">
+    <section class="panel input-panel">
+      <h2 class="panel-title">Your profile this semester</h2>
+
+      <div class="field-grid">
+        <div class="field">
+          <label>Current CGPA <span id="v_current_cgpa">7.0</span></label>
+          <input type="range" id="current_cgpa" min="4" max="10" step="0.1" value="7.0">
+        </div>
+        <div class="field">
+          <label>CGPA change vs last sem <span id="v_cgpa_trend">0.0</span></label>
+          <input type="range" id="cgpa_trend" min="-2" max="2" step="0.1" value="0">
+        </div>
+        <div class="field">
+          <label>Attendance % <span id="v_attendance_pct">78</span></label>
+          <input type="range" id="attendance_pct" min="30" max="100" step="1" value="78">
+        </div>
+        <div class="field">
+          <label>Active backlogs <span id="v_backlogs">0</span></label>
+          <input type="range" id="backlogs" min="0" max="8" step="1" value="0">
+        </div>
+        <div class="field">
+          <label>Study hours / week <span id="v_study_hours_week">12</span></label>
+          <input type="range" id="study_hours_week" min="0" max="40" step="1" value="12">
+        </div>
+        <div class="field">
+          <label>Projects completed <span id="v_projects_count">2</span></label>
+          <input type="range" id="projects_count" min="0" max="8" step="1" value="2">
+        </div>
+        <div class="field">
+          <label>Internships completed <span id="v_internships_count">0</span></label>
+          <input type="range" id="internships_count" min="0" max="4" step="1" value="0">
+        </div>
+        <div class="field">
+          <label>Coding practice hrs / week <span id="v_coding_practice_hours">5</span></label>
+          <input type="range" id="coding_practice_hours" min="0" max="25" step="1" value="5">
+        </div>
+        <div class="field">
+          <label>Communication skill (1-10) <span id="v_communication_score">6</span></label>
+          <input type="range" id="communication_score" min="1" max="10" step="1" value="6">
+        </div>
+        <div class="field">
+          <label>Extracurricular involvement <span id="v_extracurricular_score">5</span></label>
+          <input type="range" id="extracurricular_score" min="0" max="10" step="1" value="5">
+        </div>
+      </div>
+
+      <button id="analyzeBtn" class="analyze-btn">
+        <span class="btn-label">Analyze my standing</span>
+        <span class="btn-loader" hidden></span>
+      </button>
+      <p id="errorMsg" class="error-msg" hidden></p>
+    </section>
+
+    <section class="panel result-panel" id="resultPanel" hidden>
+      <div class="risk-row">
+        <div class="risk-badge" id="riskBadge">
+          <span id="riskLabel">SAFE</span>
+        </div>
+        <div class="risk-meta">
+          <p class="risk-conf" id="riskConfidence">— % confidence</p>
+          <div class="prob-bars" id="probBars"></div>
+        </div>
+      </div>
+
+      <div class="readiness-row">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 120" class="gauge">
+            <circle cx="60" cy="60" r="52" class="gauge-track"></circle>
+            <circle cx="60" cy="60" r="52" class="gauge-fill" id="gaugeFill"></circle>
+          </svg>
+          <div class="gauge-center">
+            <span id="readinessValue">0</span>
+            <small>readiness</small>
+          </div>
+        </div>
+        <div class="readiness-detail">
+          <p class="readiness-label">Placement Readiness Score</p>
+          <p class="readiness-note">Built from CGPA, projects, internships, coding practice, and communication.</p>
+        </div>
+      </div>
+
+      <div class="factors-block">
+        <p class="factors-label">Top factors driving this result</p>
+        <ul id="factorsList" class="factors-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-note">
+    <p>Model: Random Forest (risk classification + placement readiness regression) trained on a synthetic student dataset.</p>
+  </footer>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
